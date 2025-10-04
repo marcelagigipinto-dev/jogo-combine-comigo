@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combine Comigo – O Grande Jogo</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Link para a fonte Nunito do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- Link para Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Adicionar Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Tela Inicial -->
+    <div id="start-screen" class="screen active">
+        <!-- Ribbon decorativo no topo -->
+        <div class="ribbon>
+          <svg viewBox="0 0 120 40"><path d="M10,30 Q30,10 60,30 Q90,50 110,30"/></svg>
+        </div>
+        <h1 class="main-title">O GRANDE JOGO<br>COMBINE COMIGO <span class="subtitle-script">se puder</span></h1>
+        <button id="show-instructions-btn" class="btn-secondary">Como Jogar? ❓</button>
+        <div class="input-group">
+            <label for="player1-name">Nome do Jogador 1:</label>
+            <input type="text" id="player1-name" placeholder="Ex: Ana">
+        </div>
+        <div class="input-group">
+            <label for="player2-name">Nome do Jogador 2:</label>
+            <input type="text" id="player2-name" placeholder="Ex: Pedro">
+        </div>
+        <button id="start-game-btn" class="btn-primary">Começar a Jogar ❤️</button>
+    </div>
+
+    <!-- Tela de Jogo -->
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <div class="player-info">
+                <span id="current-player-name"></span> é a vez de <span id="current-player-turn"></span>!
+            </div>
+            <button id="draw-card-btn" class="btn-primary">Sortear Carta 🎲</button>
+        </div>
+        <div id="game-board">
+            <!-- O tabuleiro será gerado dinamicamente pelo JavaScript -->
+        </div>
+        <div class="player-trackers">
+            <div class="player-tracker player1-tracker">
+                <span class="player-name" id="display-player1-name"></span>: <span id="player1-position">0</span> casas
+            </div>
+            <div class="player-tracker player2-tracker">
+                <span class="player-name" id="display-player2-name"></span>: <span id="player2-position">0</span> casas
+            </div>
+        </div>
+        <!-- Adiciona botão de reiniciar na tela do tabuleiro -->
+        <div class="board-controls">
+            <button id="restart-btn" class="btn">Reiniciar Partida</button>
+        </div>
+    </div>
+
+    <!-- Pop-up de Carta de Pergunta -->
+    <div id="card-modal" class="modal">
+        <div class="modal-content card-content">
+            <span class="card-category-icon"></span>
+            <h2 class="card-category-title"></h2>
+            <p class="card-question"></p>
+            <div class="card-steps"></div>
+            <div class="card-actions">
+                <button id="correct-btn" class="btn-action btn-correct">Acertamos 💕</button>
+                <button id="incorrect-btn" class="btn-action btn-incorrect">Erramos 😅</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pop-up de Desafio -->
+    <div id="challenge-modal" class="modal">
+        <div class="modal-content challenge-content">
+            <span class="challenge-icon"></span>
+            <h2 class="challenge-title">Desafio!</h2>
+            <p class="challenge-text"></p>
+            <button id="challenge-complete-btn" class="btn-primary">Desafio Concluído!</button>
+        </div>
+    </div>
+
+    <!-- Pop-up de Instruções -->
+    <div id="instructions-modal" class="modal">
+        <div class="modal-content instructions-content">
+            <button class="close-modal-btn">&times;</button>
+            <h2>O Grande Jogo: Combine Comigo</h2>
+            <p class="objective"><strong>Objetivo:</strong> Seja o primeiro a chegar à linha de chegada no tabuleiro, respondendo corretamente ao maior número de perguntas sobre seu parceiro. 💕</p>
+
+            <h3>Como Jogar:</h3>
+            <h4>Preparação:</h4>
+            <ul>
+                <li>Digite os nomes dos jogadores na tela inicial e clique em 'Começar a Jogar ❤️'.</li>
+                <li>Os peões (rosa e vermelho) serão posicionados automaticamente no início do tabuleiro.</li>
+                <li>As cartas de pergunta são divididas em três categorias: Romance (rosa), Fantasia (lilás) e Cotidiano (vermelho).</li>
+            </ul>
+
+            <h4>Turnos:</h4>
+            <ul>
+                <li>No seu turno, clique no botão 'Sortear Carta 🎲' para revelar uma pergunta de uma das três categorias.</li>
+                <li>Leia a pergunta em voz alta para seu parceiro.</li>
+            </ul>
+
+            <h4>Escrevendo as Respostas:</h4>
+            <ul>
+                <li>Cada jogador, simultaneamente, pensa em sua resposta:</li>
+                <li>Você pensa no que acha que é a resposta correta sobre seu parceiro.</li>
+                <li>Seu parceiro pensa na resposta real.</li>
+                <li>Vocês podem usar papel e caneta ou apenas pensar nas respostas para manter a surpresa!</li>
+            </ul>
+
+            <h4>Revelando as Respostas:</h4>
+            <ul>
+                <li>Revelem as respostas um ao outro ao mesmo tempo.</li>
+                <li>Comparem as respostas para ver se vocês 'combinaram'!</li>
+            </ul>
+
+            <h4>Movimentação no Tabuleiro:</h4>
+            <ul>
+                <li><strong>Se suas respostas coincidirem:</strong> Clique em 'Acertamos 💕'. Seu peão avançará o número de casas indicado no canto superior direito da carta.</li>
+                <li><strong>Se as respostas não coincidirem:</strong> Clique em 'Erramos 😅'. O peão do seu parceiro avançará um passo para frente.</li>
+            </ul>
+
+            <h4>Desafios no Tabuleiro:</h4>
+            <ul>
+                <li>Ao pousar em uma casa com um ícone de desafio (ex: ❓, 🎁, 💋), um pop-up de desafio será ativado automaticamente.</li>
+                <li>Complete o desafio proposto antes de prosseguir. Isso pode incluir tarefas divertidas ou perguntas extras.</li>
+                <li>Após completar o desafio, clique em 'Desafio Concluído' para continuar o jogo.</li>
+            </ul>
+
+            <h4>Vencendo o Jogo:</h4>
+            <ul>
+                <li>O primeiro jogador a chegar à linha de chegada vence! 🎉</li>
+                <li>Se ambos estiverem próximos da linha de chegada no mesmo turno, continuem jogando até que um jogador ultrapasse a linha.</li>
+            </ul>
+
+            <h3>Dicas para o Jogo:</h3>
+            <ul>
+                <li><strong>Compreensão Mútua:</strong> Use esse tempo para aprender mais sobre seu parceiro. Cada pergunta é uma oportunidade de descobrir algo novo. 💡</li>
+                <li><strong>Comunicação Aberta:</strong> Seja honesto nas suas respostas e discuta os resultados para melhorar o entendimento mútuo. 🗣️</li>
+                <li><strong>Espírito Divertido:</strong> Lembre-se de que o objetivo principal é se divertir e fortalecer a conexão com seu parceiro, não importa quem vença. 😄</li>
+                <li><strong>Adaptabilidade:</strong> Se um desafio parecer inadequado, sintam-se à vontade para adaptá-lo a algo que ambos considerem mais adequado e divertido. ✨</li>
+            </ul>
+            <button class="btn-primary close-modal-btn">Entendi!</button>
+        </div>
+    </div>
+
+    <!-- Tela de Vitória -->
+    <div id="win-screen" class="screen">
+        <div class="win-content">
+            <div class="confetti"></div>
+            <div class="hearts"></div>
+            <h2 id="winner-message">Parabéns, [Nome do Vencedor]! 🎉</h2>
+            <p>Vocês completaram o jogo! Aproveitem esse momento para criar uma nova memória especial juntos.</p>
+            <button id="play-again-btn" class="btn-primary">Jogar Novamente</button>
+        </div>
+    </div>
+    <!-- Adiciona área para confete -->
+    <div id="confetti-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:999;"></div>
+    <!-- Adiciona referência ao som de vitória -->
+    <audio id="win-sound" src="win.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
+
+  </body>
+</html>
