@@ -33,8 +33,8 @@ const challengeCompleteBtn = document.getElementById('challenge-complete-btn');
 const winnerMessage = document.getElementById('winner-message');
 const playAgainBtn = document.getElementById('play-again-btn');
 
-const displayPlayer1Name = document.getElementById('display-player1_name');
-const displayPlayer2Name = document.getElementById('display-player2_name');
+const displayPlayer1Name = document.getElementById('display-player1-name');
+const displayPlayer2Name = document.getElementById('display-player2-name');
 const player1PositionDisplay = document.getElementById('player1-position');
 const player2PositionDisplay = document.getElementById('player2-position');
 
